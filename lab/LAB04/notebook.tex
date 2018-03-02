@@ -1,0 +1,964 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{LAB04\_Entropy}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Entropy!}\label{entropy}
+
+v1.0 (2018 Spring) Tavor Baharav, Kaylee Burns, Gary Cheng, Sinho Chewi,
+Hemang Jangle, William Gan, Alvin Kao, Chen Meng, Vrettos Muolos, Kanaad
+Parvate, Ray Ramamurti
+
+    \subsection{\texorpdfstring{\$\mathcal{Q}\$1. Huffman
+Codes.}{\$\$1. Huffman Codes.}}\label{huffman-codes.}
+
+    Ben Bitdiddle is an avid coinflipper. He and his friend Alice enjoy
+sending each other the results of their coinflipping escapades, but
+unfortunately, they have a very minimal data plan. In order to get
+around this, Ben decides to try and \(\textit{compress}\) the sequence
+of coinflips he wants to communicate to Alice before sending it. He
+settles on his favorite method, Huffman Coding. He solidifies his scheme
+as follows: 1. Flip a coin with heads (1) bias \(p\) and record its
+value \(M\) times. 2. Encode and send the sequence of \(M\) coin flips
+as a binary string using a Huffman code based on the coin flip
+frequencies determined by the hash table probDict you will generate.
+He's not sure how many coin flips he wants to group together as a single
+encoding symbol, so he leaves that as a variable \(n\) for now.
+
+Before attempting this section, brush up on (or learn for the first
+time) Huffman coding.
+
+    \subsubsection{\texorpdfstring{a. Implement a method
+generateProbabilities that, given \(n,p\), outputs a dictionary mapping
+sequences of \(n\) coinflips to their associated probabilities.
+}{a. Implement a method generateProbabilities that, given n,p, outputs a dictionary mapping sequences of n coinflips to their associated probabilities. }}\label{a.-implement-a-method-generateprobabilities-that-given-np-outputs-a-dictionary-mapping-sequences-of-n-coinflips-to-their-associated-probabilities.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats}
+         \PY{k+kn}{import} \PY{n+nn}{scipy}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{math}
+         \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{generateProbabilities}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Return a dictionary (probDict) which maps all 2**n possible sequences of n coin flips to their}
+        \PY{l+s+sd}{        probability, given a heads (1) bias of p}
+        \PY{l+s+sd}{        generateProbabilities(.9,2) = \PYZob{}\PYZsq{}00\PYZsq{}: .01, \PYZsq{}01\PYZsq{}: .09, \PYZsq{}10\PYZsq{}: .09, \PYZsq{}11\PYZsq{}: .81\PYZcb{}\PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{n}{probDict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+        
+            \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Your code here}
+            \PY{k}{def} \PY{n+nf}{fill\PYZus{}dict}\PY{p}{(}\PY{n}{current}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{n}{probability}\PY{p}{)}\PY{p}{:}
+                \PY{k}{nonlocal} \PY{n}{probDict}
+                \PY{k}{if} \PY{n}{i} \PY{o}{==} \PY{n}{n}\PY{p}{:}
+                    \PY{n}{probDict}\PY{p}{[}\PY{n}{current}\PY{p}{]} \PY{o}{=} \PY{n}{probability}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{fill\PYZus{}dict}\PY{p}{(}\PY{n}{current} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{probability} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{p}\PY{p}{)}\PY{p}{)}
+                    \PY{n}{fill\PYZus{}dict}\PY{p}{(}\PY{n}{current} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{probability} \PY{o}{*} \PY{n}{p}\PY{p}{)}
+                
+            \PY{n}{fill\PYZus{}dict}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{probDict}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{generateProbabilities}\PY{p}{(}\PY{o}{.}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} \{'00': 0.009999999999999995,
+         '01': 0.08999999999999998,
+         '10': 0.08999999999999998,
+         '11': 0.81\}
+\end{Verbatim}
+            
+    \subsubsection{\texorpdfstring{b. Implement a method HuffEncode that,
+given a list of frequencies, will output the corresponding mapping of
+input symbol to Huffman codewords. Write a subsequent method
+encode\_string that encodes a string given \(n\) and the huffman
+dictionary.}{b. Implement a method HuffEncode that, given a list of frequencies, will output the corresponding mapping of input symbol to Huffman codewords. Write a subsequent method encode\_string that encodes a string given n and the huffman dictionary.}}\label{b.-implement-a-method-huffencode-that-given-a-list-of-frequencies-will-output-the-corresponding-mapping-of-input-symbol-to-huffman-codewords.-write-a-subsequent-method-encode_string-that-encodes-a-string-given-n-and-the-huffman-dictionary.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}165}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} imports: heapq might be useful}
+          \PY{k+kn}{import} \PY{n+nn}{queue}
+          
+          \PY{k}{def} \PY{n+nf}{HuffEncode}\PY{p}{(}\PY{n}{freq\PYZus{}dict}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Return a dictionary (flips2huff) which maps keys from the input dictionary freq\PYZus{}dict}
+          \PY{l+s+sd}{       to bitstrings using a Huffman code based on the frequencies of each key\PYZdq{}\PYZdq{}\PYZdq{}}
+              
+              \PY{k}{def} \PY{n+nf}{huffman\PYZus{}tree}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+                  \PY{n}{frequencies} \PY{o}{=} \PY{n}{queue}\PY{o}{.}\PY{n}{PriorityQueue}\PY{p}{(}\PY{p}{)}
+                  \PY{k}{for} \PY{n}{symbol}\PY{p}{,} \PY{n}{freq} \PY{o+ow}{in} \PY{n}{freq\PYZus{}dict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{frequencies}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{[}\PY{n}{freq}\PY{p}{,} \PY{n}{count}\PY{p}{,} \PY{n}{symbol}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+          
+                  \PY{k}{while} \PY{o+ow}{not} \PY{n}{frequencies}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{first} \PY{o}{=} \PY{n}{frequencies}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}
+                      \PY{c+c1}{\PYZsh{} print(\PYZsq{}first:\PYZsq{}, first)}
+          
+                      \PY{k}{if} \PY{n}{frequencies}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                          \PY{k}{return} \PY{n}{first}
+          
+                      \PY{n}{second} \PY{o}{=} \PY{n}{frequencies}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}
+                      \PY{c+c1}{\PYZsh{} print(\PYZsq{}second:\PYZsq{}, second)}
+                      
+                      \PY{n}{combined} \PY{o}{=} \PY{p}{[}\PY{n}{first}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{second}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{first}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{second}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{]}
+                      \PY{c+c1}{\PYZsh{} print(\PYZsq{}combined:\PYZsq{}, combined)}
+                      
+                      \PY{n}{frequencies}\PY{o}{.}\PY{n}{put}\PY{p}{(}\PY{p}{[}\PY{n}{first}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{second}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{count}\PY{p}{,} \PY{p}{[}\PY{n}{first}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{second}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                      \PY{c+c1}{\PYZsh{} print(\PYZsq{}queue:\PYZsq{}, frequencies.queue)}
+                      \PY{c+c1}{\PYZsh{} print()}
+                  
+              \PY{n}{flips2huff} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+              
+              \PY{k}{def} \PY{n+nf}{traverse}\PY{p}{(}\PY{n}{huff\PYZus{}tree}\PY{p}{,} \PY{n}{bitstring}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{o+ow}{not} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{huff\PYZus{}tree}\PY{p}{,} \PY{n+nb}{list}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{flips2huff}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{huff\PYZus{}tree}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{n}{bitstring}
+                  \PY{k}{else}\PY{p}{:}
+                      \PY{n}{traverse}\PY{p}{(}\PY{n}{huff\PYZus{}tree}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{bitstring} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                      \PY{n}{traverse}\PY{p}{(}\PY{n}{huff\PYZus{}tree}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{bitstring} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              
+              \PY{n}{tree} \PY{o}{=} \PY{n}{huffman\PYZus{}tree}\PY{p}{(}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{} print(tree[2])}
+              \PY{n}{traverse}\PY{p}{(}\PY{n}{tree}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              
+              \PY{c+c1}{\PYZsh{} Your Beautiful Code Here}
+              \PY{k}{return} \PY{n}{flips2huff}
+                  
+          
+          \PY{k}{def} \PY{n+nf}{encode\PYZus{}string}\PY{p}{(}\PY{n}{string}\PY{p}{,} \PY{n}{flip2huff}\PY{p}{,}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Return a bitstring encoded according to the Huffman code defined in the dictionary flip2huff.}
+          \PY{l+s+sd}{    We assume the length of string divides n\PYZdq{}\PYZdq{}\PYZdq{}}
+              
+              \PY{c+c1}{\PYZsh{} Your Beautiful Code Here    }
+              \PY{n}{bitstring} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{string}\PY{p}{)}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{bitstring} \PY{o}{+}\PY{o}{=} \PY{n}{flip2huff}\PY{p}{[}\PY{n}{string}\PY{p}{[}\PY{n}{i}\PY{p}{:} \PY{n}{i} \PY{o}{+} \PY{n}{n}\PY{p}{]}\PY{p}{]}
+              
+              \PY{k}{return} \PY{n}{bitstring}
+          
+          \PY{n}{entropy} \PY{o}{=} \PY{k}{lambda} \PY{n}{x} \PY{p}{:} \PY{o}{\PYZhy{}}\PY{n}{x}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{log2}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{log2}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}153}]:} \PY{n}{frequencies} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{:} \PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{:} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{:} \PY{l+m+mi}{45}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}166}]:} \PY{n}{HuffEncode}\PY{p}{(}\PY{n}{frequencies}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}166}]:} \{'1': '1010', '2': '1011', '3': '100', '4': '110', '5': '111', '6': '0'\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}167}]:} \PY{n}{encode\PYZus{}string}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{123456}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{HuffEncode}\PY{p}{(}\PY{n}{frequencies}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}167}]:} '101010111001101110'
+\end{Verbatim}
+            
+    \subsubsection{c. Plot Generation}\label{c.-plot-generation}
+
+Ben isn't sure what value of \(n\) to pick, so he decides to test his
+compression scheme using different values of \(n\).
+
+Using the functions you wrote above, lets run some simulations! In order
+to find the best \(n\), plot \(n\) on your x axis, and fraction of bits
+we need to use
+\(\left( \frac{\text{Compressed Length}}{\text{Uncompressed length}} \right)\)
+on the y axis. For each setting, average over 100 trials to reduce
+noise. Generate plots for p = .5,.75,.97 (3 total plots). For each plot,
+use:
+
+\(n = 1,2,...,15\)
+
+\(M \approx 1000\) (this is to avoid truncation errors, e.g. for n=3,
+use 1002).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}168}]:} \PY{k+kn}{import} \PY{n+nn}{random}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}183}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Your beautiful simulation code here}
+          
+          \PY{n}{p\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.75}\PY{p}{,} \PY{o}{.}\PY{l+m+mi}{97}\PY{p}{]} \PY{c+c1}{\PYZsh{}coin \PYZsq{}1\PYZsq{} bias}
+          \PY{n}{nVals} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{16}\PY{p}{)} \PY{c+c1}{\PYZsh{}encode n coin flips}
+          
+          \PY{n}{numFlips} \PY{o}{=} \PY{l+m+mi}{1000}
+          \PY{n}{numTrials} \PY{o}{=} \PY{l+m+mi}{100}
+          
+          \PY{n}{averageCompression} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{p\PYZus{}list}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+              \PY{n}{p} \PY{o}{=} \PY{n}{p\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+              \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n}{nVals}\PY{p}{:}
+                  \PY{c+c1}{\PYZsh{} print(\PYZsq{}n:\PYZsq{}, n)}
+                  \PY{c+c1}{\PYZsh{} print(\PYZsq{}p:\PYZsq{}, p)}
+                  \PY{n}{probDict} \PY{o}{=} \PY{n}{generateProbabilities}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{n}\PY{p}{)}
+          
+                  \PY{n}{flip2huff} \PY{o}{=} \PY{n}{HuffEncode}\PY{p}{(}\PY{n}{probDict}\PY{p}{)}
+          
+                  \PY{n}{total\PYZus{}fraction} \PY{o}{=} \PY{l+m+mi}{0}
+                  
+                  \PY{n}{numFlipsP} \PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{n}{numFlips}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{o}{/}\PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{*} \PY{n}{n} \PY{c+c1}{\PYZsh{} to prevent truncation in the encoding}
+                  
+                  \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{numTrials}\PY{p}{)}\PY{p}{:}
+                      \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} your code here}
+                      \PY{n}{flips} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}
+                      \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{numFlipsP}\PY{p}{)}\PY{p}{:}
+                          \PY{n}{flips} \PY{o}{+}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}} \PY{k}{if} \PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{p} \PY{k}{else} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}
+                          
+                      \PY{n}{compressed} \PY{o}{=} \PY{n}{encode\PYZus{}string}\PY{p}{(}\PY{n}{flips}\PY{p}{,} \PY{n}{flip2huff}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+                      
+                      \PY{n}{fraction} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{compressed}\PY{p}{)} \PY{o}{/} \PY{n}{numFlipsP}
+                      \PY{n}{total\PYZus{}fraction} \PY{o}{+}\PY{o}{=} \PY{n}{fraction}
+                  
+                  \PY{n}{averageCompression}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{total\PYZus{}fraction} \PY{o}{/} \PY{n}{numTrials}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}194}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Plot the three graphs here}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dark\PYZus{}background}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{p\PYZus{}list}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+              \PY{n}{p} \PY{o}{=} \PY{n}{p\PYZus{}list}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{p = }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Compression Ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{nVals}\PY{p}{,} \PY{n}{averageCompression}\PY{p}{[}\PY{n}{i} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{nVals}\PY{p}{)} \PY{p}{:} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{nVals}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{empirical}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{entropy}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{theoretical}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}186}]:} \PY{n}{averageCompression}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}186}]:} [1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           1.0,
+           0.8421699999999999,
+           0.8230538922155689,
+           0.81852,
+           0.8136599999999998,
+           0.8169361277445106,
+           0.8196203796203794,
+           0.8145100000000001,
+           0.8133829365079365,
+           0.81339,
+           0.8130069930069928,
+           0.8135019841269842,
+           0.8106493506493504,
+           0.8116170634920636,
+           0.8164477611940301,
+           1.0,
+           0.54375,
+           0.39516966067864273,
+           0.32164999999999994,
+           0.28184999999999993,
+           0.25469061876247506,
+           0.2377222777222776,
+           0.22841000000000009,
+           0.21911706349206336,
+           0.21316000000000002,
+           0.20924075924075924,
+           0.19976190476190478,
+           0.20291708291708294,
+           0.20207341269841275,
+           0.20075621890547266]
+\end{Verbatim}
+            
+    Ben shows this graph to Alice, surprised that his compression ratio
+keeps improving as he increases \(n\), and seems to be asymptoting.
+Alice tells him of course, and that there exists an information
+theoretic lower bound. \#\#\# d. Find the relevant information theoretic
+lower bound, and add it as a horizontal line to your 3 plots above.
+
+    \(H(p)\)
+
+    "Wow, this is great!" Ben exclaims. He suggests continuing to increase
+\(n\), to keep improving the compression ratio. Alice tells him that
+there's a serious problem with this.
+
+\subsubsection{\texorpdfstring{e. What issue arises as \(n\) becomes
+large?}{e. What issue arises as n becomes large?}}\label{e.-what-issue-arises-as-n-becomes-large}
+
+    Compression ratio is limited, space needed as as \(n \to \infty\)
+increases exponentially in the Huffman tree.
+
+    \subsection{\texorpdfstring{\$\mathcal{Q}\$2. Typical
+Sets.}{\$\$2. Typical Sets.}}\label{typical-sets.}
+
+We will now explore the notion of \(\textit{Typical Sets}\), as covered
+in the homework. This will help solidify your understanding of entropy,
+and your understanding of Shannon's theorem. As you recall from the
+homework, \(\textit{Typical Sets}\) includes all the events with a
+probability within the range of (\(2^{-n(H(p) + \epsilon)}\),
+\(2^{-n(H(p) - \epsilon)}\)).
+
+\subsubsection{ a. Plotting}\label{a.-plotting}
+
+For \(p=.6\), \(n=10,...,500\), determine which elements would appear in
+the typical set \(A_\epsilon^{(n)}\), for \(\epsilon = .02\). Generate 3
+plots with \(n\) on the x axis, one with the probability of the typical
+set \(P(A_\epsilon^{(n)})\) on the y axis, another with
+\(\frac{1}{n} \log_2 |A_\epsilon^{(n)}|\), and a third with the fraction
+of events in the typical set \(\frac{A_\epsilon^{(n)}}{2^n}\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}245}]:} \PY{n}{p} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{6}
+          \PY{n}{epsilon} \PY{o}{=} \PY{o}{.}\PY{l+m+mi}{02}
+          
+          \PY{n}{lower} \PY{o}{=} \PY{k}{lambda} \PY{n}{n}\PY{p}{:} \PY{l+m+mi}{2} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{entropy}\PY{p}{(}\PY{n}{p}\PY{p}{)} \PY{o}{+} \PY{n}{epsilon}\PY{p}{)}\PY{p}{)}
+          \PY{n}{upper} \PY{o}{=} \PY{k}{lambda} \PY{n}{n}\PY{p}{:} \PY{l+m+mi}{2} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{entropy}\PY{p}{(}\PY{n}{p}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{epsilon}\PY{p}{)}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{find\PYZus{}ranges}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{:}
+              \PY{n}{current\PYZus{}lower} \PY{o}{=} \PY{n}{lower}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+              \PY{n}{current\PYZus{}upper} \PY{o}{=} \PY{n}{upper}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+              
+              \PY{n}{low} \PY{o}{=} \PY{k+kc}{None}
+              \PY{n}{high} \PY{o}{=} \PY{k+kc}{None}
+              
+              \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{prob} \PY{o}{=} \PY{p}{(}\PY{n}{p} \PY{o}{*}\PY{o}{*} \PY{n}{i}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{p}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{i}\PY{p}{)}
+                  \PY{k}{if} \PY{n}{prob} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{current\PYZus{}lower} \PY{o+ow}{and} \PY{n}{low} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+                      \PY{n}{low} \PY{o}{=} \PY{n}{i}
+                  \PY{k}{if} \PY{n}{prob} \PY{o}{\PYZgt{}} \PY{n}{current\PYZus{}upper} \PY{o+ow}{and} \PY{n}{high} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+                      \PY{n}{high} \PY{o}{=} \PY{n}{i}
+                      \PY{k}{break}
+                      
+              \PY{k}{return} \PY{n}{low}\PY{p}{,} \PY{n}{high}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}246}]:} \PY{n}{find\PYZus{}ranges}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{p}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}246}]:} (6, 7)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}270}]:} \PY{c+c1}{\PYZsh{} Your computation / plotting code here}
+          \PY{n}{typical\PYZus{}set\PYZus{}p} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{typical\PYZus{}set\PYZus{}size\PYZus{}log} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{typical\PYZus{}set\PYZus{}fraction} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          
+          \PY{n}{n} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{501}\PY{p}{)}
+          
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{n}\PY{p}{:}
+              \PY{n}{low}\PY{p}{,} \PY{n}{high} \PY{o}{=} \PY{n}{find\PYZus{}ranges}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{p}\PY{p}{)}
+              
+              \PY{n}{prob} \PY{o}{=} \PY{l+m+mi}{0}
+              \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{0}
+              
+              \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{low}\PY{p}{,} \PY{n}{high}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{prob} \PY{o}{+}\PY{o}{=} \PY{n}{scipy}\PY{o}{.}\PY{n}{stats}\PY{o}{.}\PY{n}{binom}\PY{o}{.}\PY{n}{pmf}\PY{p}{(}\PY{n}{val}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{n}{p}\PY{p}{)}
+                  \PY{n}{size} \PY{o}{+}\PY{o}{=} \PY{n}{val}
+                  
+              \PY{n}{typical\PYZus{}set\PYZus{}p}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{prob}\PY{p}{)}
+              \PY{n}{typical\PYZus{}set\PYZus{}size\PYZus{}log}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{i} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log2}\PY{p}{(}\PY{n}{size}\PY{p}{)}\PY{p}{)}
+              \PY{n}{typical\PYZus{}set\PYZus{}fraction}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{size} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{2} \PY{o}{*}\PY{o}{*} \PY{n}{i}\PY{p}{)}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}P(A\PYZus{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{epsilon\PYZcb{}\PYZca{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(n)\PYZcb{})\PYZdl{} vs n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}P(A\PYZus{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{epsilon\PYZcb{}\PYZca{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(n)\PYZcb{})\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{typical\PYZus{}set\PYZus{}p}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{frac}\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{log\PYZus{}}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{|A\PYZus{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{epsilon\PYZcb{}\PYZca{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(n)\PYZcb{}|\PYZcb{}\PYZdl{} vs n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{frac}\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{log\PYZus{}}\PY{l+s+si}{\PYZob{}2\PYZcb{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{|A\PYZus{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{epsilon\PYZcb{}\PYZca{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(n)\PYZcb{}|\PYZcb{}\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{typical\PYZus{}set\PYZus{}size\PYZus{}log}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{frac}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{|A\PYZus{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{epsilon\PYZcb{}\PYZca{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(n)\PYZcb{}|\PYZcb{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{2\PYZca{}}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s1}{\PYZcb{}\PYZdl{} vs n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{frac}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{|A\PYZus{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{epsilon\PYZcb{}\PYZca{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{(n)\PYZcb{}|\PYZcb{}}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{2\PYZca{}}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s1}{\PYZcb{}\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/usr/local/anaconda3/lib/python3.6/site-packages/ipykernel\_launcher.py:19: RuntimeWarning: divide by zero encountered in log2
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}270}]:} [<matplotlib.lines.Line2D at 0x1a07d67ac8>]
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    One way of thinking about the typical set asymptotically is that our
+compression function simply indexes each element in the typical set,
+numbering them \(1,2,...,2^{nH(p)}\) (\(nH(p)\) bits). All sequences
+outside of this typical set, we leave encoded as they are (n bits). If
+we look at the expected number of bits required to represent an symbol
+drawn according to the underlying distribution, we get
+
+\[\begin{align}
+\mathbb{E} [\text{len}(x)] 
+&= P(x \in A_\epsilon^{(n)}) \cdot \mathbb{E} [\text{len}(x) | x \in A_\epsilon^{(n)}] + P(x \notin A_\epsilon^{(n)}) \cdot \mathbb{E} [\text{len}(x) | x \notin A_\epsilon^{(n)}]\\
+&= P(x \in A_\epsilon^{(n)}) \cdot nH(p) + P(x \notin A_\epsilon^{(n)}) \cdot n\\
+& \hspace{-.2cm} \overset{n \rightarrow \infty}{=} 1 \cdot n H(p) + 0 \cdot n\\
+&= nH(p)
+\end{align}\]
+
+    \subsubsection{ b. Observations}\label{b.-observations}
+
+Describe the asymptotic behavior of your 3 graphs.
+
+    The graph of \(P(A_{\epsilon}^{(n)})\) vs n grows logarithmically, while
+the graph of \(\frac{1}{n} \log_{2}{|A_{\epsilon}^{(n)}|}\) vs n decays
+exponentially and the graph of \(\frac{|A_{\epsilon}^{(n)}|}{2^{n}}\) vs
+n grows linearly.
+
+    \subsection{Q3) Entropy and Information
+Content}\label{q3-entropy-and-information-content}
+
+    In the previous questions, we saw entropy being used as a limit for the
+extent we can compress a source of data. Now, we will explore an
+alternative interpretation of entropy as the amount of information
+contained in a random source.
+
+    \subsubsection{\texorpdfstring{Consider the following problem; we have 8
+bins, numbered 1 through 8. There is a prize in exactly one of the bins,
+and each bin is equally likely to contain the prize. We'd like to figure
+out what which bin contains the prize, but we can only ask questions of
+the form "Is the bin number in \(S\)?" for some
+\(S \subseteq \{1,2,3,4,5,6,7,8\}\).}{Consider the following problem; we have 8 bins, numbered 1 through 8. There is a prize in exactly one of the bins, and each bin is equally likely to contain the prize. We'd like to figure out what which bin contains the prize, but we can only ask questions of the form "Is the bin number in S?" for some S \textbackslash{}subseteq \textbackslash{}\{1,2,3,4,5,6,7,8\textbackslash{}\}.}}\label{consider-the-following-problem-we-have-8-bins-numbered-1-through-8.-there-is-a-prize-in-exactly-one-of-the-bins-and-each-bin-is-equally-likely-to-contain-the-prize.-wed-like-to-figure-out-what-which-bin-contains-the-prize-but-we-can-only-ask-questions-of-the-form-is-the-bin-number-in-s-for-some-s-subseteq-12345678.}
+
+    \subsubsection{ a) With an optimal strategy, what is the expected number
+of questions we would need to ask, assuming that we get feedback after
+every question? Describe the sequence of questions we would ask,
+depending on what feedback we
+get.}\label{a-with-an-optimal-strategy-what-is-the-expected-number-of-questions-we-would-need-to-ask-assuming-that-we-get-feedback-after-every-question-describe-the-sequence-of-questions-we-would-ask-depending-on-what-feedback-we-get.}
+
+    3 questions expected. Ask questions akin to binary searching for the
+prize in the bins. In particular, ask whether the prize is in the first
+half of the bins and then ask again in the corresponding half that the
+prize is in, such that we narrow down the possible options in half each
+time. This results in 3 questions to narrow the prize down exactly,
+since \(\log_{2}{8} = 3\).
+
+    \subsubsection{\texorpdfstring{ b) Let \(X\) be a random variable for
+the number of the bin containing the ball. What is the entropy of \(X\)?
+(Use a logarithm of base 2.) How does this compare to the expected
+number of questions we
+asked?}{ b) Let X be a random variable for the number of the bin containing the ball. What is the entropy of X? (Use a logarithm of base 2.) How does this compare to the expected number of questions we asked?}}\label{b-let-x-be-a-random-variable-for-the-number-of-the-bin-containing-the-ball.-what-is-the-entropy-of-x-use-a-logarithm-of-base-2.-how-does-this-compare-to-the-expected-number-of-questions-we-asked}
+
+    \[-\sum_{i = 1}^{8} \frac{1}{8} \log_{2}{\frac{1}{8}} = \log_{2}{8} = 3\]
+
+They are exactly equal.
+
+    \subsubsection{ c) Now consider the case where we have prior
+probabilities on how likely each bin is to contain the prize. Describe
+how we could use Huffman coding to find an efficient series of questions
+to ask, in order to figure out which bin contains the prize. (In fact,
+one can show that using Huffman coding helps you determine the optimal
+sequence of questions to
+ask.)}\label{c-now-consider-the-case-where-we-have-prior-probabilities-on-how-likely-each-bin-is-to-contain-the-prize.-describe-how-we-could-use-huffman-coding-to-find-an-efficient-series-of-questions-to-ask-in-order-to-figure-out-which-bin-contains-the-prize.-in-fact-one-can-show-that-using-huffman-coding-helps-you-determine-the-optimal-sequence-of-questions-to-ask.}
+
+    Use Huffman coding to find the optimal questions to ask by considering
+the most likely options first. In particular, build the Huffman tree by
+using the probabilities as the frequencies and combine the two smallest
+probabilities into a subtree on each iteration. The questions we will
+need to ask then are which subtree of the Huffman tree the prize is in
+and recurse into the corresponding subtree.
+
+    \subsubsection{ d) Let's look at a specific instance of this problem,
+where the bins have probabilities {[}0.4, 0.15, 0.12, 0.11, 0.07, 0.06,
+0.05, 0.04{]} of containing the prize. Use your method HuffEncode from
+the previous question to calculate the expected number of questions you
+have to ask in order to determine which bin contains the prize, using
+this
+approach.}\label{d-lets-look-at-a-specific-instance-of-this-problem-where-the-bins-have-probabilities-0.4-0.15-0.12-0.11-0.07-0.06-0.05-0.04-of-containing-the-prize.-use-your-method-huffencode-from-the-previous-question-to-calculate-the-expected-number-of-questions-you-have-to-ask-in-order-to-determine-which-bin-contains-the-prize-using-this-approach.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}304}]:} \PY{n}{dist} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{07}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{06}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{04}\PY{p}{\PYZcb{}}
+          
+          \PY{k}{def} \PY{n+nf}{huff\PYZus{}questions}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{:}
+              \PY{n}{huff} \PY{o}{=} \PY{n}{HuffEncode}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+              \PY{n}{num\PYZus{}questions} \PY{o}{=} \PY{l+m+mi}{0}
+          
+              \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n}{huff}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{num\PYZus{}questions} \PY{o}{+}\PY{o}{=} \PY{n}{dist}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{]} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{val}\PY{p}{)}
+                  
+              \PY{k}{return} \PY{n}{num\PYZus{}questions}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}305}]:} \PY{n}{huff\PYZus{}questions}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}305}]:} 2.6199999999999997
+\end{Verbatim}
+            
+    \subsubsection{ e) Repeat part b) for this new scenario, and compare
+your answer to the answer you obtained in the previous
+part.}\label{e-repeat-part-b-for-this-new-scenario-and-compare-your-answer-to-the-answer-you-obtained-in-the-previous-part.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}306}]:} \PY{k}{def} \PY{n+nf}{calc\PYZus{}entropy}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{:}
+              \PY{n}{dist\PYZus{}entropy} \PY{o}{=} \PY{l+m+mi}{0}
+          
+              \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n}{dist}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{dist\PYZus{}entropy} \PY{o}{+}\PY{o}{=} \PY{n}{val} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{log2}\PY{p}{(}\PY{n}{val}\PY{p}{)}
+              
+              \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{dist\PYZus{}entropy}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}307}]:} \PY{n}{calc\PYZus{}entropy}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}307}]:} 2.5706093850101905
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}308}]:} \PY{n}{huff\PYZus{}questions}\PY{p}{(}\PY{n}{dist}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{calc\PYZus{}entropy}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}308}]:} 0.04939061498980912
+\end{Verbatim}
+            
+    The entropy of the new distribution is less than that of the uniform
+distribution in part b).
+
+    \subsubsection{\texorpdfstring{ f) Try a few more distributions, and
+compare the expected number of questions you need to ask with Huffman
+Coding to the entropy of the distribution, \(H(X)\). Provide observed
+bounds for expected number of question with respect to
+\(H(X)\).}{ f) Try a few more distributions, and compare the expected number of questions you need to ask with Huffman Coding to the entropy of the distribution, H(X). Provide observed bounds for expected number of question with respect to H(X).}}\label{f-try-a-few-more-distributions-and-compare-the-expected-number-of-questions-you-need-to-ask-with-huffman-coding-to-the-entropy-of-the-distribution-hx.-provide-observed-bounds-for-expected-number-of-question-with-respect-to-hx.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}297}]:} \PY{k}{def} \PY{n+nf}{test\PYZus{}dist}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{:}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{expected questions:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{huff\PYZus{}questions}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{)}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entropy:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{calc\PYZus{}entropy}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{)}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{diff:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{huff\PYZus{}questions}\PY{p}{(}\PY{n}{dist}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{calc\PYZus{}entropy}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}298}]:} \PY{n}{test\PYZus{}dist}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{07}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{06}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{04}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+expected questions: 2.36
+entropy: 2.347389712674683
+diff: 0.012610287325316882
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}299}]:} \PY{n}{test\PYZus{}dist}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{02}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{21}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{07}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{06}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{04}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+expected questions: 2.24
+entropy: 2.2157360320277846
+diff: 0.02426396797221564
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}300}]:} \PY{n}{test\PYZus{}dist}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{02}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{07}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{06}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{14}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+expected questions: 2.32
+entropy: 2.3045555236731574
+diff: 0.015444476326842427
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}301}]:} \PY{n}{test\PYZus{}dist}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{02}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{07}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{06}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{04}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+expected questions: 2.3
+entropy: 2.2876480281643117
+diff: 0.012351971835688147
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}302}]:} \PY{n}{test\PYZus{}dist}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+m+mi}{1}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{01}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{07}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{06}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{05}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{:} \PY{o}{.}\PY{l+m+mi}{04}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+expected questions: 2.2800000000000002
+entropy: 2.2579900061278755
+diff: 0.022009993872124767
+
+    \end{Verbatim}
+
+    The expected number of questions needed to be asked approaches the
+entropy of the distribution \(H(X)\).
+\(0.05 \cdot H(X) \geq \mathbb{E}[Q_{X}] \geq H(X)\), where \(Q_{X}\) is
+the number of questions needed to be asked with Huffman coding for a
+distribution \(X\).
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
