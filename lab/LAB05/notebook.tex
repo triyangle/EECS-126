@@ -1,0 +1,955 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{LAB05\_MCMC}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Markov Chain Monte Carlo and
+Applications}\label{markov-chain-monte-carlo-and-applications}
+
+v1.0 (2018 Spring) Tavor Baharav, Kaylee Burns, Gary Cheng, Sinho Chewi,
+Hemang Jangle, William Gan, Alvin Kao, Chen Meng, Vrettos Muolos, Kanaad
+Parvate, Ray Ramamurti, Kannan Ramchandran
+
+    \subsection{Introduction}\label{introduction}
+
+Markov Chain Monte Carlo methods are a powerful collection of techniques
+that allow us to sample from a distribution \emph{even if we can't
+calculate the distribution directly.} This is useful for complex models,
+whose distributions may be intractable to compute. The idea is that, if
+we are able to sample from our desired distribution, we can answer any
+questions we may have about that distribution.
+
+    \subsection{What is MCMC?}\label{what-is-mcmc}
+
+Our goal is to simulate a Markov chain with a state for each outcome in
+our probability space. If the stationary distribution of the chain
+matches the distribution we want to sample from, then a random walk on
+the chain should perform like a sequence of samples from our desired
+distribution.
+
+In this lab we will be focusing on the Metropolis-Hastings algorithm,
+but this is not the only kind of MCMC method. Gibbs sampling, which you
+may have encountered in CS 188, is also a MCMC method. Gibbs sampling,
+however, requires computing a conditional distribution for each random
+variable in your model, which can be impractical and inefficient for
+some problems.
+
+We'll also explore an application of our algorithm to a sneaky spy
+challenge: use Metropolis-Hastings to decode the secret messages Gary is
+sending to Tavor! 🕵️
+
+    \subsection{Developing Metropolis Hastings
+(MH)}\label{developing-metropolis-hastings-mh}
+
+Our task is to define a set of transition and acceptance probabilities
+so that the stationary distribution of our chain is equal to our target
+distribution. Recall the process for transitioning from your homework:
+
+\begin{itemize}
+\tightlist
+\item
+  Propose the next state according to a proposal distribution
+  \(f(x,\cdot)\), where \(x\) is your current state.
+\item
+  Accept the proposal, \(y\) with probability
+  \(A(x,y) = min\{1, \frac{\pi(y)f(y,x)}{\pi(x)f(x,y)}\}\)
+\item
+  Only advance the state and sample upon acceptance.
+\end{itemize}
+
+In the cell below, implement Metropolis-Hastings according to the doc
+string. It should work for generic proposal, acceptance, and
+intitialization functions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} a bit of setup}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{animation}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{as} \PY{n+nn}{stats}
+        \PY{k+kn}{import} \PY{n+nn}{utils}
+        
+        \PY{k+kn}{from} \PY{n+nn}{super\PYZus{}sneaky\PYZus{}secret} \PY{k}{import} \PY{n}{the\PYZus{}secret\PYZus{}message}
+        
+        \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} autoreload
+        \PY{o}{\PYZpc{}}\PY{k}{autoreload} 2
+        
+        \PY{o}{\PYZpc{}} \PY{n}{matplotlib} \PY{n}{inline}
+        
+        \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dark\PYZus{}background}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}119}]:} \PY{k}{def} \PY{n+nf}{metropolis\PYZus{}hastings}\PY{p}{(}\PY{n}{proposal\PYZus{}func}\PY{p}{,} \PY{n}{init\PYZus{}func}\PY{p}{,} \PY{n}{acceptance\PYZus{}score}\PY{p}{,} \PY{n}{num\PYZus{}iters}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+          \PY{l+s+sd}{    Runs the metropolis\PYZhy{}hastings algorithm for}
+          \PY{l+s+sd}{    num\PYZus{}iters iterations, using proposal\PYZus{}func}
+          \PY{l+s+sd}{    to generate samples and scorer to assign}
+          \PY{l+s+sd}{    probability scores to samples.}
+          \PY{l+s+sd}{      }
+          \PY{l+s+sd}{    proposal\PYZus{}func \PYZhy{}\PYZhy{} function that proposes}
+          \PY{l+s+sd}{        candidate state; takes in current state as}
+          \PY{l+s+sd}{        argument and returns candidate state}
+          \PY{l+s+sd}{    init\PYZus{}func \PYZhy{}\PYZhy{} function that proposes starting}
+          \PY{l+s+sd}{        state; takes no arguments and returns a}
+          \PY{l+s+sd}{        sample state}
+          \PY{l+s+sd}{    acceptance\PYZus{}score \PYZhy{}\PYZhy{} function that calculates the acceptance}
+          \PY{l+s+sd}{        probability; takes in two state samples}
+          \PY{l+s+sd}{        (candidate first, then sample) and returns}
+          \PY{l+s+sd}{        acceptance probability}
+          \PY{l+s+sd}{    }
+          \PY{l+s+sd}{    Returns a sequence of every step\PYZhy{}th sample. You }
+          \PY{l+s+sd}{    should only sample on upon acceptance of a new}
+          \PY{l+s+sd}{    proposal. Do not keep sampling the current state.}
+          \PY{l+s+sd}{    }
+          \PY{l+s+sd}{    Note the total number of samples will NOT be}
+          \PY{l+s+sd}{    equal to num\PYZus{}iters. num\PYZus{}iters is the total number}
+          \PY{l+s+sd}{    of proposals we generate.}
+          \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+              \PY{c+c1}{\PYZsh{} TODO}
+              \PY{n}{state} \PY{o}{=} \PY{n}{init\PYZus{}func}\PY{p}{(}\PY{p}{)}
+              \PY{n}{samples} \PY{o}{=} \PY{l+m+mi}{1}
+              \PY{n}{sequence} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              
+              \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}iters}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{proposal} \PY{o}{=} \PY{n}{proposal\PYZus{}func}\PY{p}{(}\PY{n}{state}\PY{p}{)}
+                  \PY{n}{acceptance} \PY{o}{=} \PY{n}{acceptance\PYZus{}score}\PY{p}{(}\PY{n}{proposal}\PY{p}{,} \PY{n}{state}\PY{p}{)}
+                  
+                  \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{acceptance}\PY{p}{:}
+                      \PY{n}{samples} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                      \PY{n}{state} \PY{o}{=} \PY{n}{proposal}
+                      
+                      \PY{k}{if} \PY{n}{samples} \PY{o}{\PYZpc{}} \PY{n}{step} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                          \PY{n}{sequence}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{state}\PY{p}{)}
+                  
+              \PY{k}{return} \PY{n}{sequence}
+\end{Verbatim}
+
+
+    \subsection{Sampling from Distributions Using
+MH}\label{sampling-from-distributions-using-mh}
+
+Now that we have a method for sampling from distributions, let's apply
+it to some models. We'll start with very simple models so that we can
+compare the results from sampling with what we can compute analytically.
+This is also a useful opportunity for you to debug your implementation.
+Your implementation should be able to model a Gaussian and exponential
+distribution successfully.
+
+\emph{An interesting fact to note is that the algorithm works even for
+these \textbf{continuous distributions}. In this case the underlying
+Markov Chain will have a continuous state space (\(\mathbb{R}\))}
+
+    \subsection{\texorpdfstring{A Friendly Gaussian:
+\(\mathcal{N}(60, 1)\)}{A Friendly Gaussian: \textbackslash{}mathcal\{N\}(60, 1)}}\label{a-friendly-gaussian-mathcaln60-1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}120}]:} \PY{n}{sample\PYZus{}prior} \PY{o}{=} \PY{k}{lambda}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{60}\PY{p}{)}
+          \PY{n}{sample\PYZus{}candidate} \PY{o}{=} \PY{k}{lambda} \PY{n}{theta}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{n}{theta}\PY{p}{)}
+          \PY{n}{scorer} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{:} \PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{l+m+mi}{60}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{p}{(}\PY{n}{y} \PY{o}{\PYZhy{}} \PY{l+m+mi}{60}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+          \PY{n}{normal\PYZus{}samples} \PY{o}{=} \PY{n}{metropolis\PYZus{}hastings}\PY{p}{(}\PY{n}{sample\PYZus{}candidate}\PY{p}{,} \PY{n}{sample\PYZus{}prior}\PY{p}{,} \PY{n}{scorer}\PY{p}{,} \PY{l+m+mi}{10000}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{)}
+          \PY{n}{utils}\PY{o}{.}\PY{n}{plot\PYZus{}histogram\PYZus{}and\PYZus{}transitions}\PY{p}{(}\PY{n}{normal\PYZus{}samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{\texorpdfstring{Exponential Distribution:
+\(\mathcal{Exp}(.5)\)}{Exponential Distribution: \textbackslash{}mathcal\{Exp\}(.5)}}\label{exponential-distribution-mathcalexp.5}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}121}]:} \PY{n}{exp\PYZus{}pdf} \PY{o}{=} \PY{n}{utils}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{)}
+          \PY{n}{exp\PYZus{}scorer} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{:} \PY{n}{exp\PYZus{}pdf}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{/} \PY{n}{exp\PYZus{}pdf}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+          \PY{n}{exp\PYZus{}prior} \PY{o}{=} \PY{k}{lambda} \PY{p}{:} \PY{l+m+mi}{10}
+          \PY{n}{exp\PYZus{}samples} \PY{o}{=} \PY{n}{metropolis\PYZus{}hastings}\PY{p}{(}\PY{n}{sample\PYZus{}candidate}\PY{p}{,} \PY{n}{exp\PYZus{}prior}\PY{p}{,} \PY{n}{exp\PYZus{}scorer}\PY{p}{,}\PY{l+m+mi}{10000}\PY{p}{)}
+          \PY{n}{utils}\PY{o}{.}\PY{n}{plot\PYZus{}histogram\PYZus{}and\PYZus{}transitions}\PY{p}{(}\PY{n}{exp\PYZus{}samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Effects of Initial Distribution, Convergence Diagnosis and
+Burn-in
+Time}\label{effects-of-initial-distribution-convergence-diagnosis-and-burn-in-time}
+
+In the case of the Gaussian above, our \texttt{init\_function}(initial
+distribution) was \(\mathcal{N}(60,1)\) which is exactly the same as the
+distribution we were trying to sample, i.e, we started the chain from
+the stationary distribution. However in general, we obviously don't have
+the ability to sample from the distribution we were trying to sample
+from in the first place! Notice that in the exponential, it goes down
+drastically from 10 where we started the chain, and oscillates more
+around lower values.
+
+Now run the following code. As you run it, think about the following
+questions - are there some samples we need to ignore at the beginning?
+Explain what is happening with the Markov Chain based on the parameters
+we've used and your observations from the state vs iteration plot and
+tell us approximately how many samples we need to ignore.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}122}]:} \PY{n}{sample\PYZus{}prior} \PY{o}{=} \PY{k}{lambda}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+          \PY{n}{sample\PYZus{}candidate} \PY{o}{=} \PY{k}{lambda} \PY{n}{theta}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{n}{theta}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+          \PY{n}{normal\PYZus{}pdf} \PY{o}{=} \PY{n}{utils}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}
+          \PY{n}{scorer} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{:} \PY{n}{normal\PYZus{}pdf}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{n}{normal\PYZus{}pdf}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+          \PY{n}{normal\PYZus{}samples} \PY{o}{=} \PY{n}{metropolis\PYZus{}hastings}\PY{p}{(}\PY{n}{sample\PYZus{}candidate}\PY{p}{,} \PY{n}{sample\PYZus{}prior}\PY{p}{,} \PY{n}{scorer}\PY{p}{,} \PY{l+m+mi}{5000}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+          \PY{n}{utils}\PY{o}{.}\PY{n}{plot\PYZus{}transitions}\PY{p}{(}\PY{n}{normal\PYZus{}samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}123}]:} \PY{n}{sample\PYZus{}prior} \PY{o}{=} \PY{k}{lambda}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{75}\PY{p}{)}
+          \PY{n}{sample\PYZus{}candidate} \PY{o}{=} \PY{k}{lambda} \PY{n}{theta}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{n}{theta}\PY{p}{,} \PY{n}{scale}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{)}
+          \PY{n}{normal\PYZus{}pdf} \PY{o}{=} \PY{n}{utils}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+          \PY{n}{scorer} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{:} \PY{n}{normal\PYZus{}pdf}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{n}{normal\PYZus{}pdf}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+          \PY{n}{normal\PYZus{}samples} \PY{o}{=} \PY{n}{metropolis\PYZus{}hastings}\PY{p}{(}\PY{n}{sample\PYZus{}candidate}\PY{p}{,} \PY{n}{sample\PYZus{}prior}\PY{p}{,} \PY{n}{scorer}\PY{p}{,} \PY{l+m+mi}{5000}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+          \PY{n}{utils}\PY{o}{.}\PY{n}{plot\PYZus{}transitions}\PY{p}{(}\PY{n}{normal\PYZus{}samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{YOUR ANSWER HERE}\label{your-answer-here}
+
+Yes, many of the samples in the beginning are based on a prior
+distribution different than the one we are sampling from. The Markov
+Chain begins from an initial sample from the prior distribution. The
+Markov Chain converges to the stationary distribution from which we are
+sampling over the iterations. Around the first 1000 samples can be
+safely ignored.
+
+    \subsection{Drawbacks of MCMC
+Techniques}\label{drawbacks-of-mcmc-techniques}
+
+Now we'll evaluate the effectiveness of our sampling technique on a
+variety of models. The examples below will highlight some of the
+drawbacks and idiosyncrasies of MCMC techniques. We will look at this in
+the context of distributions with two peaks (two separated regions of
+high probability), also known as bimodal distributions. We will see that
+the peaks may not be sampled appropriately.
+
+\subsection{Bimodal Mixture of
+Gaussians}\label{bimodal-mixture-of-gaussians}
+
+A mixture of Gaussians is obtained when you have two subpopulations
+('classes') each distributed normally(\(\mathcal{N}(\mu_1,\sigma_1^2)\)
+and \(\mathcal{N}(\mu_2,\sigma_2^2)\)) . An example is heights of people
+with the subclasses of men and women. In the mixture model the 'classes'
+have probabilities \(p\) and \(1-p\) respectively. So the pdf of this
+distribution would be
+\[p\cdot f_X(x\ |\text{ class 1}) + (1-p)\cdot f_X(x\ |\text{ class 2}) = p\cdot \frac{1}{\sqrt{2\pi \sigma_1^2}} e^{-\frac{(x - \mu_1)^2}{2\sigma_1^2}} + (1-p)\cdot \frac{1}{\sqrt{2\pi \sigma_2^2}} e^{-\frac{(x - \mu_2)^2}{2\sigma_2^2}}
+\]
+
+For there to be two peaks in the pdf (to be bimodal), there should be
+(loosely speaking) sufficient separation between the means with respect
+to the standard deviations (the widths of the distributions). Otherwise
+if the peaks are too close relative to the widths, it is possible for
+the mixture to lead to just one central peak between the two means.
+There are exact conditions for this you can look up if you are
+interested.
+
+For this part we will be using a mixture with equal probabilities
+\((0.5)\) on each of the individual Gaussians with means \(60\) and
+\(40\). Try MH on this distribution for standard deviations of
+\(5,4,3,2,1\) for each of the individual Gaussians. You should see that
+one of the peaks dominates (could be either one) as the standard
+deviation reduces even though both classes have an equal probability.
+For low std devs 2 and 1, only one peak should show up. What effect do
+you think changing the standard deviation has? What possible
+disadvantage of MH does this bimodal distribution show?
+
+\emph{Hints:} * \emph{There should be jumps in your transition plots (at
+least for std devs 4 and 5). Think about what these jumps mean.} *
+\emph{As the widths of the peaks grow thinner, how often would you
+propose a state on the other peak that has a high probability?} *
+\emph{How many iterations would we need to tell that we've got samples
+from both classes a reasonable number of times?}
+
+    \subsection{YOUR ANSWER HERE}\label{your-answer-here}
+
+Decreasing the standard deviation decreases the probability that a
+sample from the other mode is proposed, and thus samples tend to
+concentrate more one of the modes. A possible disadvantage of MH is that
+the algorithm fails to pick up on certain characteristics like the
+bimodality of certain distributions. Jumps in the transition plots
+indicate transitioning from accepting samples from one mode to the other
+mode. The number of iterations to determine that samples from both
+classes are obtained a reasonable number of times varies with the
+standard deviation used for the 2 modes. Larger standard deviations will
+require fewer iterations, while smaller standard deviations may require
+much more.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}124}]:} \PY{k}{def} \PY{n+nf}{sample\PYZus{}from\PYZus{}bimodal}\PY{p}{(}\PY{n}{stdev}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Samples from bimodal mixture of Gaussians}
+          \PY{l+s+sd}{    with standard deviation stdev, as described above.\PYZdq{}\PYZdq{}\PYZdq{}}
+              
+              \PY{n}{pdf} \PY{o}{=} \PY{n}{utils}\PY{o}{.}\PY{n}{gauss\PYZus{}mix}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{l+m+mi}{40}\PY{p}{,}\PY{n}{stdev}\PY{p}{,}\PY{l+m+mi}{60}\PY{p}{,}\PY{n}{stdev}\PY{p}{)}
+          
+              \PY{n}{sample\PYZus{}candidate} \PY{o}{=} \PY{k}{lambda} \PY{n}{theta}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{n}{theta}\PY{p}{)}
+              \PY{n}{new\PYZus{}scorer} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{:} \PY{n}{pdf}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{n}{pdf}\PY{p}{(}\PY{n}{y}\PY{p}{)} 
+              \PY{n}{new\PYZus{}prior} \PY{o}{=} \PY{k}{lambda} \PY{p}{:} \PY{l+m+mi}{50}
+          
+              \PY{n}{points} \PY{o}{=} \PY{n}{metropolis\PYZus{}hastings}\PY{p}{(}\PY{n}{sample\PYZus{}candidate}\PY{p}{,}\PY{n}{new\PYZus{}prior}\PY{p}{,}\PY{n}{new\PYZus{}scorer}\PY{p}{,}\PY{l+m+mi}{10000}\PY{p}{)}
+              \PY{n}{utils}\PY{o}{.}\PY{n}{plot\PYZus{}histogram\PYZus{}and\PYZus{}transitions}\PY{p}{(}\PY{n}{points}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}125}]:} \PY{n}{sample\PYZus{}from\PYZus{}bimodal}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}126}]:} \PY{n}{sample\PYZus{}from\PYZus{}bimodal}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}127}]:} \PY{n}{sample\PYZus{}from\PYZus{}bimodal}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}128}]:} \PY{n}{sample\PYZus{}from\PYZus{}bimodal}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}129}]:} \PY{n}{sample\PYZus{}from\PYZus{}bimodal}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Decoding Secret Messages Using
+MCMC}\label{decoding-secret-messages-using-mcmc}
+
+Now we'll use our algorithm to solve a mystery on the EE 126 staff.
+Grumpy Gary and Tricky Tavor are sending each other secret messages
+using a cipher: each character in the message is either an uppercase
+letter or a space (27 possible characters), and their cipher is a
+one-to-one mapping between the letters of the alphabet + ' ', and a
+random permutation of the alphabet + ' '. To send a message, they
+replace each character with the corresponding character in their cipher.
+
+Your job is to decode their message using the Metropolis-Hastings
+algorithm you wrote above. Our goal is to find the cipher that maximizes
+the likelihood of seeing the characters in the translated message. The
+cipher will be a list of integers representing the letter of the
+alphabet that the letter corresponding to that index should be
+translated to. For example, if "g" should be replaced with "a", then
+\(\text{cipher}[6]\) should equal 0. \textbf{Note: 0-index when counting
+letters of the alphabet.}
+
+Our model of language will consider each character to be dependent only
+on the previous character. For example,
+
+\[P(x_1 = c, x_2 = a, x_3 = t) = P(x_1 = c)P(x_2 = a|x_1 = c)P(x_3 = t|x_2 = a)\]
+
+These transition probabilities will be calculated empirically by
+counting the number of transitions between every pair of characters in a
+large corpus of text.
+
+The state space is the set of all ciphers
+\(X = \{\sigma : \sigma \text{ is a permutation of the English alphabet and '  '}\}\).
+\(|X| = 27!\), so finding the most likely cipher is far too costly to
+calculate naively, but we can sample from the space of all ciphers
+intelligently by using Metropolis-Hastings with the following functions:
+
+\textbf{Proposals}: To propose new ciphers, we will randomly swap two
+characters in our cipher.
+
+\textbf{Acceptance Function}: Note that because our proposal
+distribution is symmetric, the acceptance probability becomes
+\(A(x,y) = \frac{\widetilde{\pi}(y)}{\widetilde{\pi}(x)}\).
+\(\widetilde{\pi}(x)\) is the probability of observing the sequence of
+characters in the message decoded by cipher \(x\):
+
+\[\widetilde{\pi}(\cdot) = P(x_1 = \text{letter}_1)P(x_2 = \text{letter}_2|x_1 = \text{letter}_1)P(x_3 = \text{letter}_3|x_2 = \text{letter}_2)\]
+
+\(\widetilde{\pi}(\cdot)\) is \emph{not} a valid probability over all
+ciphers because we don't normalize, but it is sufficient for us to
+compare two ciphers.
+
+Here is an example of one iteration of the algorithm. If we are dealing
+with a reduced alphabet of \(\{A,B,C,D,\text{' '}\}\) and our current
+cipher is \([ 2,0,4,3,1 ]\), then we are mapping
+\(A->C, B->A, C->\text{' '}\), etc. If our proposal function suggests
+the perturbed cipher \([ 4,0,2,3,1 ]\), we will accept this cipher as
+our new state with probability
+\(\frac{\widetilde{\pi}([ 4,0,2,3,1 ])}{\widetilde{\pi}([ 2,0,4,3,1 ])}\).
+
+We wrote functions to find the bigram frequency matrix, which gives the
+transition probabilities between characters, and to convert messages
+into a numerical format. To run the starter code below, you will need to
+run the \texttt{download\_war\_and\_peace.sh} script to download corpus
+from which we will learn the transition probabilities. Run
+\texttt{./download\_war\_and\_peace.sh} from this directory.
+
+Some final notes and tips: - For simplicity's sake, don't worry about
+the initial \(P(x_1 = \text{letter}_1)\): the sequence is 538 characters
+long, so this initial probability won't affect the relative probability
+between 2 ciphers by any noticeable amount. - To translate from letters
+to numbers quickly, take a look at the built-in \texttt{ord} function.
+Keep in mind that we are only working with uppercase letters, so it will
+map each letter to an integer in the range 65 to 90.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}130}]:} \PY{n}{input\PYZus{}file} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{war\PYZus{}and\PYZus{}peace.txt}\PY{l+s+s2}{\PYZdq{}}
+          
+          \PY{k}{def} \PY{n+nf}{build\PYZus{}bigram\PYZus{}freq\PYZus{}matrix}\PY{p}{(}\PY{n}{input\PYZus{}file}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+          \PY{l+s+sd}{    Builds a matrix that represents the transitional}
+          \PY{l+s+sd}{    probabilities between letters in input\PYZus{}file.}
+          \PY{l+s+sd}{    }
+          \PY{l+s+sd}{    bigram\PYZus{}freq\PYZus{}matrix[0][1] is the probability of}
+          \PY{l+s+sd}{    transitioning from the 0th letter of the alphabet}
+          \PY{l+s+sd}{    to the 1st letter of the alphabet, where letters}
+          \PY{l+s+sd}{    are zero\PYZhy{}indexed. \PYZsq{} \PYZsq{} (space) is denoted as the}
+          \PY{l+s+sd}{    26th letter of the alphabet.}
+          \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+              \PY{n}{counts} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{27}\PY{p}{,} \PY{l+m+mi}{27}\PY{p}{]}\PY{p}{)}
+              \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{input\PYZus{}file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                  \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{100000}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{line} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+                      \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{line}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{2}\PY{p}{:}
+                          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{line}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{:}
+                              \PY{n}{first\PYZus{}char} \PY{o}{=} \PY{n+nb}{ord}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{65} \PY{k}{if} \PY{n}{line}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{isalpha}\PY{p}{(}\PY{p}{)} \PY{k}{else} \PY{l+m+mi}{26}
+                              \PY{n}{second\PYZus{}char} \PY{o}{=} \PY{n+nb}{ord}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{65} \PY{k}{if} \PY{n}{line}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{isalpha}\PY{p}{(}\PY{p}{)} \PY{k}{else} \PY{l+m+mi}{26}
+                              \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{first\PYZus{}char} \PY{o}{==} \PY{l+m+mi}{26} \PY{o+ow}{and} \PY{n}{second\PYZus{}char} \PY{o}{==} \PY{l+m+mi}{26}\PY{p}{)} \PY{o+ow}{and} \PY{n}{first\PYZus{}char} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{26} \PY{o+ow}{and} \PY{n}{second\PYZus{}char} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{26}\PY{p}{:}
+                                  \PY{n}{counts}\PY{p}{[}\PY{n}{first\PYZus{}char}\PY{p}{]}\PY{p}{[}\PY{n}{second\PYZus{}char}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                  \PY{n}{bigram\PYZus{}freq\PYZus{}matrix} \PY{o}{=} \PY{p}{(}\PY{n}{counts}\PY{o}{.}\PY{n}{T} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{counts}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+              \PY{k}{return} \PY{n}{bigram\PYZus{}freq\PYZus{}matrix}
+          
+          \PY{k}{def} \PY{n+nf}{decode}\PY{p}{(}\PY{n}{string}\PY{p}{,} \PY{n}{ordering}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+          \PY{l+s+sd}{    Decodes a string according to the given}
+          \PY{l+s+sd}{    ordering.}
+          \PY{l+s+sd}{    }
+          \PY{l+s+sd}{    ordering: a list representing the cipher.}
+          \PY{l+s+sd}{        For example, if in our cipher, \PYZsq{}a\PYZsq{}}
+          \PY{l+s+sd}{        should be replaced with \PYZsq{}c\PYZsq{}, then }
+          \PY{l+s+sd}{        ordering[0] should equal 2.}
+          \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+              \PY{n}{output\PYZus{}str} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}
+              \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{string}\PY{p}{:}
+                  \PY{n}{first\PYZus{}char} \PY{o}{=} \PY{n+nb}{ord}\PY{p}{(}\PY{n}{i}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{65} \PY{k}{if} \PY{n}{i}\PY{o}{.}\PY{n}{isalpha}\PY{p}{(}\PY{p}{)} \PY{k}{else} \PY{l+m+mi}{26}
+                  \PY{n}{output\PYZus{}str} \PY{o}{+}\PY{o}{=} \PY{n+nb}{chr}\PY{p}{(}\PY{n}{ordering}\PY{p}{[}\PY{n}{first\PYZus{}char}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{65}\PY{p}{)} \PY{k}{if} \PY{n}{ordering}\PY{p}{[}\PY{n}{first\PYZus{}char}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{26} \PY{k}{else} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}
+              \PY{k}{return} \PY{n}{output\PYZus{}str}
+          
+          \PY{n}{bigram\PYZus{}freq\PYZus{}matrix} \PY{o}{=} \PY{n}{build\PYZus{}bigram\PYZus{}freq\PYZus{}matrix}\PY{p}{(}\PY{n}{input\PYZus{}file}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Visualizing the Bigram Frequency
+Matrix}\label{visualizing-the-bigram-frequency-matrix}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}131}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{bigram\PYZus{}freq\PYZus{}matrix}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{none}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}131}]:} <matplotlib.image.AxesImage at 0x1a0d229358>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}132}]:} \PY{k+kn}{import} \PY{n+nn}{string}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}133}]:} \PY{k}{def} \PY{n+nf}{starting\PYZus{}state}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+          \PY{l+s+sd}{    Start with a random permutation.}
+          \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+              \PY{c+c1}{\PYZsh{} TODO}
+              \PY{n}{permutation} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{27}\PY{p}{)}\PY{p}{)}
+              \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{permutation}\PY{p}{)}
+              
+              \PY{k}{return} \PY{n}{permutation}
+          
+          \PY{k}{def} \PY{n+nf}{sample\PYZus{}candidate}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+          \PY{l+s+sd}{    To search for new ciphers, randomly}
+          \PY{l+s+sd}{    swap two letters in the previous cipher.}
+          \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+              \PY{c+c1}{\PYZsh{} TODO}
+              \PY{n}{candidate} \PY{o}{=} \PY{n}{sample}\PY{p}{[}\PY{p}{:}\PY{p}{]}
+              \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{candidate}\PY{p}{)}
+              
+              \PY{n}{first\PYZus{}index} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n}{size}\PY{p}{)}
+              \PY{n}{second\PYZus{}index} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n}{size}\PY{p}{)}
+              
+              \PY{n}{candidate}\PY{p}{[}\PY{n}{first\PYZus{}index}\PY{p}{]} \PY{o}{=} \PY{n}{sample}\PY{p}{[}\PY{n}{second\PYZus{}index}\PY{p}{]}
+              \PY{n}{candidate}\PY{p}{[}\PY{n}{second\PYZus{}index}\PY{p}{]} \PY{o}{=} \PY{n}{sample}\PY{p}{[}\PY{n}{first\PYZus{}index}\PY{p}{]}
+              
+              \PY{k}{return} \PY{n}{candidate}
+          
+          \PY{k}{def} \PY{n+nf}{make\PYZus{}acceptance\PYZus{}scorer}\PY{p}{(}\PY{n}{decode\PYZus{}string}\PY{p}{,} \PY{n}{transition\PYZus{}matrix}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+          \PY{l+s+sd}{    Calculate the acceptance probability, which is the}
+          \PY{l+s+sd}{    probability of observing the message translated by}
+          \PY{l+s+sd}{    the proposed cipher devided by the probability of}
+          \PY{l+s+sd}{    obseving the message translated by the current}
+          \PY{l+s+sd}{    cipher.}
+          \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+              \PY{k}{def} \PY{n+nf}{scorer}\PY{p}{(}\PY{n}{candidate}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{nonlocal} \PY{n}{transition\PYZus{}matrix}
+                  \PY{k}{nonlocal} \PY{n}{decode\PYZus{}string}
+                  \PY{c+c1}{\PYZsh{} TODO}
+                  
+                  \PY{n}{ratio} \PY{o}{=} \PY{l+m+mi}{1}
+                  
+                  \PY{n}{index} \PY{o}{=} \PY{k}{lambda} \PY{n}{char}\PY{p}{:} \PY{n+nb}{ord}\PY{p}{(}\PY{n}{char}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{65} \PY{k}{if} \PY{n}{char}\PY{o}{.}\PY{n}{isalpha}\PY{p}{(}\PY{p}{)} \PY{k}{else} \PY{l+m+mi}{26}
+                  
+                  \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{decode\PYZus{}string}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{first\PYZus{}index} \PY{o}{=} \PY{n}{index}\PY{p}{(}\PY{n}{decode\PYZus{}string}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{second\PYZus{}index} \PY{o}{=} \PY{n}{index}\PY{p}{(}\PY{n}{decode\PYZus{}string}\PY{p}{[}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                      
+                      \PY{n}{proposed} \PY{o}{=} \PY{n}{transition\PYZus{}matrix}\PY{p}{[}\PY{n}{candidate}\PY{p}{[}\PY{n}{first\PYZus{}index}\PY{p}{]}\PY{p}{]}\PY{p}{[}\PY{n}{candidate}\PY{p}{[}\PY{n}{second\PYZus{}index}\PY{p}{]}\PY{p}{]}
+                      \PY{n}{current} \PY{o}{=} \PY{n}{transition\PYZus{}matrix}\PY{p}{[}\PY{n}{sample}\PY{p}{[}\PY{n}{first\PYZus{}index}\PY{p}{]}\PY{p}{]}\PY{p}{[}\PY{n}{sample}\PY{p}{[}\PY{n}{second\PYZus{}index}\PY{p}{]}\PY{p}{]}
+                      
+                      \PY{n}{ratio} \PY{o}{*}\PY{o}{=} \PY{p}{(}\PY{n}{proposed} \PY{o}{/} \PY{n}{current}\PY{p}{)}
+                  
+                  \PY{k}{return} \PY{n}{ratio}
+              \PY{k}{return} \PY{n}{scorer}
+          
+          \PY{n}{acceptance\PYZus{}scorer} \PY{o}{=} \PY{n}{make\PYZus{}acceptance\PYZus{}scorer}\PY{p}{(}\PY{n}{the\PYZus{}secret\PYZus{}message}\PY{p}{,} \PY{n}{bigram\PYZus{}freq\PYZus{}matrix}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}144}]:} \PY{c+c1}{\PYZsh{} Use MCMC to find the right cipher}
+          \PY{n}{samples} \PY{o}{=} \PY{n}{metropolis\PYZus{}hastings}\PY{p}{(}\PY{n}{sample\PYZus{}candidate}\PY{p}{,} \PY{n}{starting\PYZus{}state}\PY{p}{,} \PY{n}{acceptance\PYZus{}scorer}\PY{p}{,} \PY{l+m+mi}{10000}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Watch your Decoding
+Improve}\label{watch-your-decoding-improve}
+
+We print out the first few samples below. As you continue to sample from
+the space of all ciphers, the quality of your decoding should improve
+roughly. You may have to run the algorithm a few times to achieve good
+results.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}145}]:} \PY{k}{for} \PY{n}{sample} \PY{o+ow}{in} \PY{n}{samples}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{:}
+              \PY{n+nb}{print}\PY{p}{(}\PY{n}{decode}\PY{p}{(}\PY{n}{the\PYZus{}secret\PYZus{}message}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+SCRSRKAKEA ROGRTHARD AAQRPOKKLNUTVRSNJRYS TROGRONAROGRTHACARO DSNUFSTUONCRTHUCRUCRHUDHIVROGGANCUMARRCO O UTUACRSTRLPREA QAIAVRKSQARUTRTHAU RDOSIRTORDUMARZOKANRSRYISPARTORGAAIRPOKGO TSEIARSCRZAIIRSCREATTA RTHARPOKKLNUTVRRPOKYS UNDRCYAPUGUPRHOLCACRTORPHS SPTA CRG OKRSRKOMUARSEOLTRELIIVUNDRUCRSECL JRSNJREAVONJRUNSPPL STARRKSQUNDRTHARPISUKRTHSTRCO O UTUACRS ARPIUXLACRUCRJAKASNUNDRTHARCUCTA HOOJRSNJRMSILACRTHSTRTHAVRS ARGOLNJAJRONRRTHUCRPIAS IVRUCRSRCTSERSTRSRPOKKLNUTVRONRPSKYLCRTHSTRJOACRNOTHUNDRELTRCLYYO TRTHAR ACTROGRTHARCTLJANTREOJVR 
+
+SCISIFAFKA IOGITHAID AAJIPOFFLNETMISNVIBS TIOGIONAIOGITHACAIO DSNEWSTEONCITHECIECIHEDHRMIOGGANCEUAIICO O ETEACISTILPIKA JARAMIFSJAIETITHAE IDOSRITOIDEUAIZOFANISIBRSPAITOIGAARIPOFGO TSKRAISCIZARRISCIKATTA ITHAIPOFFLNETMIIPOFBS ENDICBAPEGEPIHOLCACITOIPHS SPTA CIG OFISIFOUEAISKOLTIKLRRMENDIECISKCL VISNVIKAMONVIENSPPL STAIIFSJENDITHAIPRSEFITHSTICO O ETEACIS AIPREXLACIECIVAFASNENDITHAICECTA HOOVISNVIUSRLACITHSTITHAMIS AIGOLNVAVIONIITHECIPRAS RMIECISICTSKISTISIPOFFLNETMIONIPSFBLCITHSTIVOACINOTHENDIKLTICLBBO TITHAI ACTIOGITHAICTLVANTIKOVMI 
+
+APIAIFEFBESIOMITHEIGSEEVICOFFRN TWIANDIUASTIOMIONEIOMITHEPEIOSGAN YAT ONPITH PI PIH GHLWIOMMENP KEIIPOSOS T EPIATIRCIBESVELEWIFAVEI TITHE SIGOALITOIG KEIZOFENIAIULACEITOIMEELICOFMOSTABLEIAPIZELLIAPIBETTESITHEICOFFRN TWIICOFUAS NGIPUEC M CIHORPEPITOICHASACTESPIMSOFIAIFOK EIABORTIBRLLW NGI PIABPRSDIANDIBEWONDI NACCRSATEIIFAV NGITHEICLA FITHATIPOSOS T EPIASEICL XREPI PIDEFEAN NGITHEIP PTESHOODIANDIKALREPITHATITHEWIASEIMORNDEDIONIITH PICLEASLWI PIAIPTABIATIAICOFFRN TWIONICAFURPITHATIDOEPINOTH NGIBRTIPRUUOSTITHEISEPTIOMITHEIPTRDENTIBODWI 
+
+AD A PEPBER OF THE GREEV COPPUNITY ANK SART OF ONE OF THEDE ORGANIXATIOND THID ID HIGHLY OFFENDIME  DORORITIED AT UC BERVELEY PAVE IT THEIR GOAL TO GIME WOPEN A SLACE TO FEEL COPFORTABLE AD WELL AD BETTER THE COPPUNITY  COPSARING DSECIFIC HOUDED TO CHARACTERD FROP A POMIE ABOUT BULLYING ID ABDURK ANK BEYONK INACCURATE  PAVING THE CLAIP THAT DORORITIED ARE CLIQUED ID KEPEANING THE DIDTERHOOK ANK MALUED THAT THEY ARE FOUNKEK ON  THID CLEARLY ID A DTAB AT A COPPUNITY ON CAPSUD THAT KOED NOTHING BUT DUSSORT THE REDT OF THE DTUKENT BOKY  
+
+AS A DEDPER OF THE GREEV CODDUNITY ANK BART OF ONE OF THESE ORGANIXATIONS THIS IS HIGHLY OFFENSIME  SORORITIES AT UC PERVELEY DAVE IT THEIR GOAL TO GIME WODEN A BLACE TO FEEL CODFORTAPLE AS WELL AS PETTER THE CODDUNITY  CODBARING SBECIFIC HOUSES TO CHARACTERS FROD A DOMIE APOUT PULLYING IS APSURK ANK PEYONK INACCURATE  DAVING THE CLAID THAT SORORITIES ARE CLIQUES IS KEDEANING THE SISTERHOOK ANK MALUES THAT THEY ARE FOUNKEK ON  THIS CLEARLY IS A STAP AT A CODDUNITY ON CADBUS THAT KOES NOTHING PUT SUBBORT THE REST OF THE STUKENT POKY  
+
+
+    \end{Verbatim}
+
+    \subsubsection{Let's Get Sleuthy}\label{lets-get-sleuthy}
+
+What did Gary's secret message to Tavor say?
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}146}]:} \PY{n}{combined} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{s}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{s} \PY{o+ow}{in} \PY{n}{samples}\PY{p}{]}
+          \PY{n}{best\PYZus{}combined} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{combined}\PY{p}{)}\PY{p}{,}\PY{n}{key}\PY{o}{=}\PY{n}{combined}\PY{o}{.}\PY{n}{count}\PY{p}{)}
+          \PY{n}{your\PYZus{}best\PYZus{}cipher} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{best\PYZus{}combined}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+          \PY{n}{decode}\PY{p}{(}\PY{n}{the\PYZus{}secret\PYZus{}message}\PY{p}{,}\PY{n}{your\PYZus{}best\PYZus{}cipher}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}146}]:} 'AS A MEMBER OF THE GREEK COMMUNITY AND PART OF ONE OF THESE ORGANIXATIONS THIS IS HIGHLY OFFENSIVE  SORORITIES AT UC BERKELEY MAKE IT THEIR GOAL TO GIVE WOMEN A PLACE TO FEEL COMFORTABLE AS WELL AS BETTER THE COMMUNITY  COMPARING SPECIFIC HOUSES TO CHARACTERS FROM A MOVIE ABOUT BULLYING IS ABSURD AND BEYOND INACCURATE  MAKING THE CLAIM THAT SORORITIES ARE CLIQUES IS DEMEANING THE SISTERHOOD AND VALUES THAT THEY ARE FOUNDED ON  THIS CLEARLY IS A STAB AT A COMMUNITY ON CAMPUS THAT DOES NOTHING BUT SUPPORT THE REST OF THE STUDENT BODY '
+\end{Verbatim}
+            
+    \subsubsection{Do you recognize the
+message?}\label{do-you-recognize-the-message}
+
+You may notice that sometimes when you run the algorithm, certain
+letters are not decoded correctly. For example, "cliques" may be
+translated as "clizues." Why do you think that is?
+
+May be due to the fact that the transition probabilities for the letters
+were obtained from a specific corpus of text that does not exactly match
+that of the message.
+
+    {[}1{]}
+https://people.eecs.berkeley.edu/\textasciitilde{}sinclair/cs294/n1.pdf
+
+{[}2{]}
+http://www.mit.edu/\textasciitilde{}ilkery/papers/MetropolisHastingsSampling.pdf
+
+{[}3{]}
+http://statweb.stanford.edu/\textasciitilde{}cgates/PERSI/papers/MCMCRev.pdf
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
