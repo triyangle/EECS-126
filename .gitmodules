@@ -1,0 +1,3 @@
+[submodule "project/PageRank"]
+	path = project/PageRank
+	url = https://github.com/triyangle/EECS-126-Project.git
